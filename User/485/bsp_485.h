@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "sys.h" 
 
+#define DEVICE_1_ADDRESS 0x01
+#define DEVICE_2_ADDRESS 0x02
 
 #define _485_USART                             UART4
 #define _485_USART_CLK                         RCC_APB1Periph_UART4

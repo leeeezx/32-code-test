@@ -82,14 +82,21 @@ void _485_Config(void)
 
 void bsp_485_IRQHandler(void)                	
 {
-	uint8_t Res;
-	if(USART_GetITStatus(_485_USART, USART_IT_RXNE) != RESET)  
-	{
-		Res =USART_ReceiveData(_485_USART);	     //读取接收到的数据
+    uint8_t Res;
+    if(USART_GetITStatus(_485_USART, USART_IT_RXNE) != RESET)  
+    {
+        Res = USART_ReceiveData(_485_USART);	     //读取接收到的数据
 
-		Modbus_zubao(Res);				 
-	}	
+        // 检查接收到的地址，确定是哪个设备的数据
+        if (Res == devices[0].address)
+        {
+            Modbus_zubao(0, Res);
+        }
+        else if (Res == devices[1].address)
+        {
+            Modbus_zubao(1, Res);
+        }
+    }	
 }
-
 
 

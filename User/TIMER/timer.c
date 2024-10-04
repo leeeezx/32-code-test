@@ -1,6 +1,8 @@
 #include "timer.h"
 #include "modbus.h"
 
+extern ModbusDevice devices[MAX_DEVICES];
+
 void TIM3_Int_Init(uint16_t arr,uint16_t psc)
 {
     TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
@@ -32,11 +34,15 @@ extern uint16_t  bianhuashichang1,miaojishi,fenjishi;
 
 void TIM3_IRQHandler(void)   
 {
-	      
-	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) //检查指定的TIM中断发生与否:TIM 中断源 
-	{
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update  );  //清除TIMx的中断待处理位:TIM 中断源 
-		Modbus_Is_fasong();
-		Modbus_Is_jieshou();
-	}
+    if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) 
+    {
+        TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+        
+        // 为每个设备调用 Modbus 函数
+        for (int i = 0; i < MAX_DEVICES; i++) 
+        {
+            Modbus_Is_fasong(i);
+            Modbus_Is_jieshou(i);
+        }
+    }
 }
