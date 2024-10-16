@@ -115,21 +115,21 @@ void shunxuzhixing(uint8_t deviceIndex)
     {
         devices[deviceIndex].is_fasong_16 = 1;
         devices[deviceIndex].addr = 0x040E;   //p4.007地址
-        devices[deviceIndex].data = 0x0004;   //设置SPD0为1，SPD1为0
+        devices[deviceIndex].data = 0x0004;   //设置SPD0为1，SPD1为0，选择p1.009
     }    
 /*********************设置SPD0和SPD1的值，选择p1.010寄存器的速度值50r/min*********************/
     if(biaozhiwei[1])    
     {
         devices[deviceIndex].is_fasong_16 = 1;
         devices[deviceIndex].addr = 0x040E;   //p4.007地址
-        devices[deviceIndex].data = 0x0008;   //设置SPD0为0，SPD1为1
+        devices[deviceIndex].data = 0x0008;   //设置SPD0为0，SPD1为1，选择p1.010
     }    
 /***********设置SPD0和SPD1的值，选择p1.011寄存器的速度值-50r/min**********/
     if(biaozhiwei[2])    
     {
         devices[deviceIndex].is_fasong_16 = 1;
         devices[deviceIndex].addr = 0x040E;   //p4.007地址
-        devices[deviceIndex].data = 0x000C;   //设置SPD0为1，SPD1为1
+        devices[deviceIndex].data = 0x000C;   //设置SPD0为1，SPD1为1，选择P1.011
     }
 /***********设置p3.006值，使DI1和DI2为系统参数P4.007控制**********/
    if(biaozhiwei[3])    
@@ -234,6 +234,7 @@ void MODBUS_MASTER_SEND_16(uint8_t deviceIndex, uint16_t Reg_Start_Addr, uint16_
 {
     devices[deviceIndex].Modbus_TX_FrameFlag = 0;
     devices[deviceIndex].Modbus_TX_BUFF[0] = devices[deviceIndex].address;
+//	devices[deviceIndex].Modbus_TX_BUFF[0] = 0x0001;
     devices[deviceIndex].Modbus_TX_BUFF[1] = 0x10;
     devices[deviceIndex].Modbus_TX_BUFF[2] = Reg_Start_Addr / 256;
     devices[deviceIndex].Modbus_TX_BUFF[3] = Reg_Start_Addr % 256;
